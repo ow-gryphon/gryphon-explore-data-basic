@@ -156,7 +156,7 @@ def main():
     repo_name = context["repository"].split("/")[-1]
     tag_name = context["event"]["ref"].split("/")[-1]
 
-    metadata_file = f"template/{repo_name}/metadata.json"
+    metadata_file = f"template/metadata.json"
     metadata = parse_metadata(metadata_file)
 
     args = dict()
