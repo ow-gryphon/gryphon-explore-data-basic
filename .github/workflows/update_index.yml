@@ -39,14 +39,41 @@ jobs:
           pip install beautifulsoup4
           python template/.github/actions.py
       
-      - name: Create pull request
-        uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      # - name: Create pull request
+      #   uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      #   env:
+      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      #   with:
+      #     source_folder: 'grypi/'
+      #     destination_repo: 'ow-gryphon/grypi'
+      #     destination_base_branch: 'master'
+      #     destination_head_branch: 'patch/${{ github.event.repository.name }}'
+      #     user_email: 'vittorfpereira@gmail.com'
+      #     user_name: 'vittorfp'
+
+      - name: Pushes index.html file
+        uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_folder: 'grypi/'
+          source_file: 'grypi/index.html'
           destination_repo: 'ow-gryphon/grypi'
-          destination_base_branch: 'master'
-          destination_head_branch: 'patch/${{ github.event.ref }}'
+          destination_folder: ${{ github.event.repository.name }}
+          destination_branch: 'master'
           user_email: 'vittorfpereira@gmail.com'
           user_name: 'vittorfp'
+          commit_message: 'Updating index for the template ${{github.repository}}.'
+
+  
+      - name: Pushes ${{github.repository}}/index.html file
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'grypi/${{github.repository}}/index.html'
+          destination_repo: 'ow-gryphon/grypi'
+          destination_folder: ${{ github.event.repository.name }}
+          destination_branch: 'master'
+          user_email: 'vittorfpereira@gmail.com'
+          user_name: 'vittorfp'
+          commit_message: 'Updating index for the template ${{github.repository}}.'

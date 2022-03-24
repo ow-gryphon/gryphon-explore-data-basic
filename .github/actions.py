@@ -174,7 +174,7 @@ def main():
         update(args)
 
     # delete(issue_ctx)
-
+    # TODO: deletar a pasta .git
 
 if __name__ == "__main__":
     main()
