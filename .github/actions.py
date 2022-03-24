@@ -7,8 +7,8 @@ import shutil
 # noinspection PyPackageRequirements
 from bs4 import BeautifulSoup
 
-INDEX_FILE = "template/index.html"
-TEMPLATE_FILE = "template/pkg_template.html"
+INDEX_FILE = "grypi/index.html"
+TEMPLATE_FILE = "grypi/pkg_template.html"
 
 
 def normalize(name):
