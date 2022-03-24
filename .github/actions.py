@@ -160,7 +160,7 @@ def main():
     metadata = parse_metadata(metadata_file)
 
     args = dict()
-    args["version"] = tag_name
+    args["version"] = args["new version"] = tag_name
     args["package name"] = repo_name
     args["short description"] = args["long description"] = metadata.get("description", "")
     args["homepage"] = f"https://github.com/{context['repository']}"
