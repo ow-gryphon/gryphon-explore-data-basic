@@ -108,7 +108,7 @@ def update(args):
         index.write(soup.prettify("utf-8"))
 
     # Change the package page
-    index_file = os.path.join(f"gryp/{n_package_name}/index.html")
+    index_file = os.path.join(f"grypi/{n_package_name}/index.html")
     with open(index_file) as html_file:
         soup = BeautifulSoup(html_file, "html.parser")
 
