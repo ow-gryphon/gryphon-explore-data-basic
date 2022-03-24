@@ -18,7 +18,6 @@ jobs:
         python-version: [3.6]
 
     steps:
-      steps:
       - name: Checkout grypi repo
         uses: actions/checkout@v3
         with:
