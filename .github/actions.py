@@ -164,7 +164,7 @@ def main():
     args["package name"] = repo_name
     args["short description"] = args["long description"] = metadata.get("description", "")
     args["homepage"] = f"https://github.com/{context['repository']}"
-    args["link"] = f"git+{args['homepage']}.git@{tag_name}"
+    args["link"] = args["link for the new version"] = f"git+{args['homepage']}.git@{tag_name}"
     args["author"] = metadata.get("author", "")
 
     if not package_exists(repo_name):
