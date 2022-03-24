@@ -44,7 +44,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_folder: 'grypi'
+          source_folder: 'grypi/'
           destination_repo: 'ow-gryphon/grypi'
           destination_base_branch: 'master'
           destination_head_branch: 'patch/${{ github.event.ref }}'
