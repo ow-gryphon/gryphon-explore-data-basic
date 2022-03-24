@@ -85,7 +85,7 @@ def register(args):
     template = template.replace("_long_description", args["long description"])
 
     os.mkdir(n_package_name)
-    package_index = os.path.join(n_package_name, INDEX_FILE)
+    package_index = os.path.join("grypi", n_package_name, "index.html")
     with open(package_index, "w") as f:
         f.write(template)
 
@@ -165,7 +165,7 @@ def main():
     args["package name"] = repo_name
     args["short description"] = args["long description"] = metadata.get("description", "")
     args["homepage"] = f"https://github.com/{context['repository']}"
-    args["link"] = args["link for the new version"] = f"git+{args['homepage']}.git@{tag_name}"
+    args["link"] = args["link for the new version"] = f"git+{args['homepage']}.git@{args['version']}"
     args["author"] = metadata.get("author", "")
 
     if not package_exists(repo_name):
