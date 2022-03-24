@@ -1,5 +1,3 @@
-
-
 name: update_index
 
 on:
@@ -41,10 +39,14 @@ jobs:
           pip install beautifulsoup4
           python template/.github/actions.py
       
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          commit-message: ":package: [:robot:] Modify package in PyPi index ${{ github.event.ref }}"
-          title: "Updates from ${{ github.event.ref }}"
-          body: "Fix #${{ github.event.ref }}"
-          branch: "pr/patch-${{ github.event.ref }}"
+      - name: Create pull request
+      uses: paygoc6/action-pull-request-another-repo@v1.0.1
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_folder: 'grypi'
+        destination_repo: 'ow-gryphon/grypi'
+        destination_base_branch: 'master'
+        destination_head_branch: 'patch/${{ github.event.ref }}'
+        user_email: 'vittorfpereira@gmail.com'
+        user_name: 'vittorfp'

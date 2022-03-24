@@ -108,7 +108,7 @@ def update(args):
         index.write(soup.prettify("utf-8"))
 
     # Change the package page
-    index_file = os.path.join(n_package_name, INDEX_FILE)
+    index_file = os.path.join(f"gryp/{n_package_name}/index.html")
     with open(index_file) as html_file:
         soup = BeautifulSoup(html_file, "html.parser")
 
@@ -159,8 +159,9 @@ def main():
     metadata_file = f"template/metadata.json"
     metadata = parse_metadata(metadata_file)
 
+    # TODO: Fix how the tag is gathered
     args = dict()
-    args["version"] = args["new version"] = tag_name
+    args["version"] = args["new version"] = "0.0.2"  # tag_name
     args["package name"] = repo_name
     args["short description"] = args["long description"] = metadata.get("description", "")
     args["homepage"] = f"https://github.com/{context['repository']}"
