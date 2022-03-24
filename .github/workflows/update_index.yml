@@ -1,0 +1,51 @@
+
+
+name: update_index
+
+on:
+  push:
+    tags:
+      - '**'
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
+
+    steps:
+      steps:
+      - name: Checkout grypi repo
+        uses: actions/checkout@v3
+        with:
+          path: 'grypi'
+          repository: 'ow-gryphon/grypi'
+      
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+        with:
+          path: 'template'
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Run Action
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          pip install beautifulsoup4
+          python .github/actions.py
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: ":package: [:robot:] Modify package in PyPi index ${{ github.event.ref }}"
+          title: "Updates from ${{ github.event.ref }}"
+          body: "Fix #${{ github.event.ref }}"
+          branch: "pr/patch-${{ github.event.ref }}"
