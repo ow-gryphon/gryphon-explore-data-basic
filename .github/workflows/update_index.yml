@@ -3,7 +3,7 @@ name: update_index
 on:
   push:
     tags:
-      - '**'
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
     branches:
       - master
       - main
@@ -21,35 +21,23 @@ jobs:
         with:
           path: 'grypi'
           repository: 'ow-gryphon/grypi'
-      
+
       - name: Checkout this repo
         uses: actions/checkout@v3
         with:
           path: 'template'
-      
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Run Action
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           pip install beautifulsoup4
           python template/.github/actions.py
-      
-      # - name: Create pull request
-      #   uses: paygoc6/action-pull-request-another-repo@v1.0.1
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      #   with:
-      #     source_folder: 'grypi/'
-      #     destination_repo: 'ow-gryphon/grypi'
-      #     destination_base_branch: 'master'
-      #     destination_head_branch: 'patch/${{ github.event.repository.name }}'
-      #     user_email: 'vittorfpereira@gmail.com'
-      #     user_name: 'vittorfp'
 
       - name: Pushes index.html file
         uses: dmnemec/copy_file_to_another_repo_action@main
@@ -63,7 +51,7 @@ jobs:
           user_name: 'vittorfp'
           commit_message: 'Updating index for the template ${{github.repository}}.'
 
-  
+
       - name: Pushes ${{github.event.repository.name}}/index.html file
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
