@@ -65,12 +65,12 @@ jobs:
           commit_message: 'Updating index for the template ${{github.repository}}.'
 
   
-      - name: Pushes ${{github.repository}}/index.html file
+      - name: Pushes ${{github.event.repository.name}}/index.html file
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'grypi/${{github.repository}}/index.html'
+          source_file: 'grypi/${{github.event.repository.name}}/index.html'
           destination_repo: 'ow-gryphon/grypi'
           destination_folder: ${{ github.event.repository.name }}
           destination_branch: 'master'
