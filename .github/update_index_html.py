@@ -1,7 +1,7 @@
 import os
+import re
 import json
 import copy
-import re
 import shutil
 
 # noinspection PyPackageRequirements
@@ -9,6 +9,11 @@ from bs4 import BeautifulSoup
 
 INDEX_FILE = "grypi/index.html"
 TEMPLATE_FILE = "grypi/pkg_template.html"
+
+VERSION_PATTERN = re.compile(
+    "^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)"
+    "(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
+)
 
 
 def normalize(name):
@@ -156,12 +161,15 @@ def main():
     repo_name = context["repository"].split("/")[-1]
     tag_name = context["event"]["ref"].split("/")[-1]
 
+    if not VERSION_PATTERN.match(tag_name):
+        raise RuntimeError(f"Version name not valid: {tag_name}")
+
     metadata_file = f"template/metadata.json"
     metadata = parse_metadata(metadata_file)
 
     # TODO: Fix how the tag is gathered
     args = dict()
-    args["version"] = args["new version"] = "0.0.2"  # tag_name
+    args["version"] = args["new version"] = tag_name
     args["package name"] = repo_name
     args["short description"] = args["long description"] = metadata.get("description", "")
     args["homepage"] = f"https://github.com/{context['repository']}"
@@ -173,8 +181,6 @@ def main():
     else:
         update(args)
 
-    # delete(issue_ctx)
-    # TODO: deletar a pasta .git
 
 if __name__ == "__main__":
     main()
