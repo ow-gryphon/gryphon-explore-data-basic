@@ -1,28 +1,25 @@
+import json
 import setuptools
 
-# with open("README.md", "r") as fh:
-#     long_description = fh.read() 
+with open("template/README.md", "r") as fh:
+    long_description = fh.read()
 
-# with open('requirements.txt') as fr:
-#     reqs = fr.read().strip().split('\n')
+with open('requirements.txt') as fr:
+    requirements = fr.read().strip().split('\n')
 
-long_description = ""
-reqs = []
+with open('metadata.json') as fr:
+    metadata = json.load(fr)
 
 setuptools.setup(
-    name="gryphon-explore-data-basic",
-    version="0.0.8",
-    author="Daniel Wang",
-    author_email="daniel.wang@oliverwyman.com",
-    description="A public github-hosted python package for test, with dependency.",
+    name="gryphon-nct-data-exploration",  # Name of the repository
+    version="0.0.1",
+    author=metadata.get("author", ""),
+    author_email=metadata.get("author_email", ""),
+    description=metadata.get("author", ""),
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ow-gryphon/gryphon-explore-data-basic",
+    url="https://github.com/ow-gryphon/gryphon-nct-data-exploration/",  # Repository URL or externally maintained page
     packages=setuptools.find_packages(),
-    classifiers=[
-        "Programming Language :: Python :: 3.6",
-        "Operating System :: OS Independent",
-    ],
-    python_requires='>=3.6',
-    install_requires=reqs,
+    python_requires='>=3.7',
+    install_requires=requirements,
 )
