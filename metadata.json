@@ -6,5 +6,6 @@
     
     "description": "This template provides examples of data profiling and exploration for both numerical and categorical fields. It relies primarily on pandas and matplotlib capabilities.",
     "command": "generate",
-    "author": "Daniel Wang"
+    "author": "Daniel Wang",
+    "read_more_link": "https://github.com/ow-gryphon/gryphon-nct-data-exploration"
 }
